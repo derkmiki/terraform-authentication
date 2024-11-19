@@ -46,5 +46,6 @@ resource "aws_cognito_user_pool_client" "cognito" {
   supported_identity_providers         = each.value.supported_identity_providers
   allowed_oauth_scopes                 = each.value.allowed_oauth_scopes
   allowed_oauth_flows                  = each.value.allowed_oauth_flows
+  generate_secret                      = each.value.generate_secret
 }
 

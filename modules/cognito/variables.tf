@@ -27,5 +27,6 @@ variable "pool_clients" {
     supported_identity_providers         = list(string)
     allowed_oauth_scopes                 = list(string)
     allowed_oauth_flows                  = list(string)
+    generate_secret                      = bool
   }))
 }
