@@ -18,14 +18,17 @@ Triggers can be added to cognito via lambda_config which came from lambda-functi
 
 ## When Adding new source do the following
 
-1. Add the new source code by creating new folder in src directory
+1. Add the new source code by creating new folder in src directory.
 2. The folder contains all the needed file to be zipped. 
-3. Make sure the main js is named main.js and has handler function
+3. Make sure the main js is named main.js and has handler function.
 4. Create your own terraform.tfvars in parent directory.
-5. Add the new source in terraform.tfvars under sources configuration
-6. Run the following  
+5. Add the new source in terraform.tfvars under sources configuration.
+6. Run the following:
 `
 terraform apply --target "module.lambda_functions"
+`
+then
+`
 terraform apply
 `
 
