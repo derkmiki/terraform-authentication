@@ -8,6 +8,11 @@ variable "pool_name" {
   type        = string
 }
 
+variable "sources" {
+  description = "The list of source of lambda function files. These are folders under the src"
+  type = list(string)
+}
+
 variable "cognito_domain" {
   description = "The domain name for cognito client."
 }
@@ -28,18 +33,4 @@ variable "pool_clients" {
     allowed_oauth_flows                  = list(string)
     generate_secret                      = bool
   }))
-}
-
-variable "lambda_config" {
-  description = "Contains the config for lambda with configname => arn format. This config usually came from lambda-function output."
-  type = object({
-    create_auth_challenge = optional(string)
-    user_migration = optional(string)
-    custom_message = optional(string)
-    define_auth_challenge = optional(string)    
-    post_authentication = optional(string)    
-    post_confirmation = optional(string)
-    pre_authentication = optional(string)
-    pre_sign_up = optional(string)
-  })
 }

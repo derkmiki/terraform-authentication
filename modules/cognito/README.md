@@ -1,6 +1,7 @@
 # Terraform Cognito
 
 This module is cognito implementation allows a user pool to be attached to multiple app clients.
+Triggers can be added to cognito via lambda_config which came from lambda-function module output.
 
 ## How to use the module?
 
@@ -25,6 +26,10 @@ module "cognito" {
         allowed_oauth_flows          = ["code", "implicit"]
     }
   ]
+  lambda_config = {
+    create_auth_challenge = "lambda.function.arn"
+    user_migration = "lambda.function.arn"
+  }
 }
 ```
 
@@ -40,6 +45,8 @@ Note the following parameters:
 
 * `pool_clients`: List of pool clients configuration, make sure name is unique within the list.
 
+* `lambda_config`: Contains the config for lambda with configname => arn format. This config usually came from lambda-function output.
+
 Provided outputs:
 
 * `cognito_domain`: The created cognito domain.
@@ -48,4 +55,6 @@ Provided outputs:
 
 * `pool_client_ids`: The mapped of created ids for each app client created.
 
-  
+
+## LICENSE: 
+MIT  

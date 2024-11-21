@@ -26,6 +26,26 @@ resource "aws_cognito_user_pool" "cognito" {
     require_symbols   = true
     require_numbers   = true
   }
+
+  lambda_config {
+    create_auth_challenge = var.lambda_config.create_auth_challenge == null ? null :  var.lambda_config.create_auth_challenge
+    user_migration = var.lambda_config.user_migration == null ? null :  var.lambda_config.user_migration    
+    custom_message = var.lambda_config.custom_message == null ? null :  var.lambda_config.custom_message    
+    define_auth_challenge = var.lambda_config.define_auth_challenge == null ? null :  var.lambda_config.define_auth_challenge    
+    post_authentication = var.lambda_config.post_authentication == null ? null :  var.lambda_config.post_authentication    
+    post_confirmation = var.lambda_config.post_confirmation == null ? null :  var.lambda_config.post_confirmation           
+    pre_authentication = var.lambda_config.pre_authentication == null ? null :  var.lambda_config.pre_authentication           
+    pre_sign_up = var.lambda_config.pre_sign_up == null ? null :  var.lambda_config.pre_sign_up           
+  }
+}
+
+resource "aws_lambda_permission" "cognito" {
+  for_each = { for key, val in var.lambda_config: key => val if val != null }
+  statement_id  = "AllowExecutionFromCognito"
+  action        = "lambda:InvokeFunction"
+  function_name = each.value
+  principal     = "cognito-idp.amazonaws.com"
+  source_arn    = aws_cognito_user_pool.cognito.arn
 }
 
 resource "aws_cognito_user_pool_domain" "cognito" {
